@@ -14,5 +14,11 @@ namespace BusBoard.ConsoleApp
             Console.WriteLine("Enter your bus stop ID: ");
             return Console.ReadLine();
         }
+
+        public string AskForPostCode()
+        {
+            Console.WriteLine("Enter your postcode");
+            return Console.ReadLine();
+        }
     }
 }

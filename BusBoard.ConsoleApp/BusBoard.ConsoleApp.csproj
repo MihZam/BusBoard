@@ -49,10 +49,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bus.cs" />
+    <Compile Include="BusStop.cs" />
     <Compile Include="ConsoleOutput.cs" />
-    <Compile Include="DataReceiver.cs" />
+    <Compile Include="DataReceiverFromTfL.cs" />
+    <Compile Include="DataReceiverFromPostCodes.cs" />
+    <Compile Include="PostCode.cs" />
+    <Compile Include="PostcodeJson.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="random.cs" />
     <Compile Include="UserInput.cs" />
   </ItemGroup>
   <ItemGroup>
