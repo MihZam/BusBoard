@@ -6,5 +6,6 @@ namespace BusBoard.ConsoleApp
     {
         public string lineName { get; set; }
         public DateTime expectedArrival { get; set; }
+        public int timeToStation { get; set; }
     }
 }
