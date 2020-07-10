@@ -10,7 +10,7 @@ namespace BusBoard.ConsoleApp
             return Console.ReadLine();
         }
 
-        public string AskForPostCode()
+        public string AskForPostcode()
         {
             Console.WriteLine("Enter your postcode: ");
             return Console.ReadLine();

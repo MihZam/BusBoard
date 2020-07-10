@@ -54,6 +54,7 @@
     <Compile Include="DataReceiverFromTfL.cs" />
     <Compile Include="DataReceiverFromPostCodes.cs" />
     <Compile Include="Postcode.cs" />
+    <Compile Include="Sorter.cs" />
     <Compile Include="stopPointsContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -13,20 +13,22 @@ namespace BusBoard.ConsoleApp
       var postcodeReceiver = new DataReceiverFromPostCodes();
       var ui = new UserInterface();
       var output = new ConsoleOutput();
+      var sorter = new Sorter();
       
       output.WelcomeToBusBoard();
 
-      var postCodeInput = ui.AskForPostCode();
-      var postCode = postcodeReceiver.GetPostCodeData(postCodeInput);
-      var closestBusStops = tfLReceiver.GetBusStops(postCode.longitude, postCode.latitude);
+      var postcodeInput = ui.AskForPostcode();
+      var postcode = postcodeReceiver.GetPostcodeData(postcodeInput);
+      var closestBusStops = tfLReceiver.GetBusStops(postcode.longitude, postcode.latitude);
+      closestBusStops = sorter.sortByDistance(closestBusStops, postcode);
       
-      foreach (var stop in closestBusStops)
-        // Need to change this so that only the two nearest are printed
+      for (var i = 0; i < 2; i++)
       {
+        var stop = closestBusStops[i];
         Console.WriteLine("Bus stop ID: " + stop.naptanId);
         
         var upcomingBuses = tfLReceiver.GetBusArrivals(stop.naptanId);
-        upcomingBuses.Sort((x,y) => x.timeToStation.CompareTo(y.timeToStation));
+        upcomingBuses = sorter.sortByTime(upcomingBuses);
         output.printNextNBuses(upcomingBuses, 5);
         
         Console.WriteLine();
