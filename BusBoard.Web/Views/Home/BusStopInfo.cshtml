@@ -13,6 +13,20 @@
 @foreach (var stop in Model.Stops)
 {
     <div class="row">
-        <p>@stop</p>
+        <p>@stop.naptanId</p>
     </div>
 }
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("BusStopTimingInfo", "Home", FormMethod.Get))
+        {
+            <fieldset>
+                <legend>Bus Stop ID:</legend>
+                @Html.TextBoxFor(m => m.Stops)
+
+                <input type="submit" value="Get Bus Info" />
+            </fieldset>
+        }
+    </div>
+</div>

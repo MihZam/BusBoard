@@ -14,6 +14,7 @@ namespace BusBoard.ConsoleApp
       var ui = new UserInterface();
       var output = new ConsoleOutput();
       var sorter = new Sorter();
+      var format = new Formatter();
       
       output.WelcomeToBusBoard();
 
@@ -29,7 +30,7 @@ namespace BusBoard.ConsoleApp
         
         var upcomingBuses = tfLReceiver.GetBusArrivals(stop.naptanId);
         upcomingBuses = sorter.sortByTime(upcomingBuses);
-        output.printNextNBuses(upcomingBuses, 5);
+        Console.WriteLine(format.GetFormatOfNextNBuses(upcomingBuses, 5));
         
         Console.WriteLine();
 

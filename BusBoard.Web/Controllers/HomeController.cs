@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Web.Mvc;
 using BusBoard.ConsoleApp;
 using BusBoard.Web.Models;
 using BusBoard.Web.ViewModels;
@@ -31,6 +34,18 @@ namespace BusBoard.Web.Controllers
       var stops = tfLReceiver.GetBusStops(postcode.longitude, postcode.latitude);
       
       var info = new BusStopInfo(stops);
+      return View(info);
+    }
+    
+    public ActionResult BusStopTimingInfo(BusStopSelection selection)
+    {
+      var tfLReceiver = new DataReceiverFromTfL();
+      var sorter = new Sorter();
+      
+      var upcomingBuses = tfLReceiver.GetBusArrivals(selection.BusStop);
+      var upcomingBusesSorted = sorter.sortByTime(upcomingBuses);
+
+      var info = new BusStopTimingInfo(upcomingBusesSorted);
       return View(info);
     }
 
