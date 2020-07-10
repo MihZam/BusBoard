@@ -1,7 +1,7 @@
 ﻿@model BusBoard.Web.ViewModels.BusStopInfo
 
 @{
-    ViewBag.Title = "There are the local bus stops";
+    ViewBag.Title = "Bus Stop Information";
 }
 
 <h2>BusStopInformation</h2>
@@ -10,23 +10,14 @@
     <p>The local bus stops are: </p>
 </div>
 
+
 @foreach (var stop in Model.Stops)
 {
     <div class="row">
         <p>@stop.naptanId</p>
-    </div>
-}
-
-<div class="row">
-    <div class="col-md-12">
-        @using (Html.BeginForm("BusStopTimingInfo", "Home", FormMethod.Get))
+        @foreach (var bus in stop.buses)
         {
-            <fieldset>
-                <legend>Bus Stop ID:</legend>
-                @Html.TextBoxFor(m => m.Stops)
-
-                <input type="submit" value="Get Bus Info" />
-            </fieldset>
+            <p>@bus.timeToStation</p>
         }
     </div>
-</div>
+}

@@ -27,28 +27,33 @@ namespace BusBoard.Web.Controllers
     
     public ActionResult BusStopInfo(PostcodeSelection selection)
     {
+      // Makes objects to communicate with APIs
       var postcodeReceiver = new DataReceiverFromPostcodes();
       var tfLReceiver = new DataReceiverFromTfL();
       
+      // Gets the postcode data from the input
       var postcode = postcodeReceiver.GetPostcodeData(selection.Postcode);
+      
+      // Gets the closest 2 stops
       var stops = tfLReceiver.GetBusStops(postcode.longitude, postcode.latitude);
+      List<BusStopArrivals> up = new List<BusStopArrivals>();
       
-      var info = new BusStopInfo(stops);
+      foreach (var stop in stops)
+      {
+        var sorter = new Sorter();
+      
+        // gets the upcoming buses
+        var upcomingBuses = tfLReceiver.GetBusArrivals(stop.naptanId);
+        var upcomingBusesSorted = sorter.sortByTime(upcomingBuses);
+        
+        // adds the combined bus stop name & upcoming buses object to a list
+        up.Add(new BusStopArrivals(stop.naptanId, upcomingBusesSorted));
+      }
+      
+      // sends the list off to BusStopInfo
+      var info = new BusStopInfo(up);
       return View(info);
     }
-    
-    public ActionResult BusStopTimingInfo(BusStopSelection selection)
-    {
-      var tfLReceiver = new DataReceiverFromTfL();
-      var sorter = new Sorter();
-      
-      var upcomingBuses = tfLReceiver.GetBusArrivals(selection.BusStop);
-      var upcomingBusesSorted = sorter.sortByTime(upcomingBuses);
-
-      var info = new BusStopTimingInfo(upcomingBusesSorted);
-      return View(info);
-    }
-
 
     public ActionResult About()
     {
