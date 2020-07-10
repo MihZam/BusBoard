@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using BusBoard.ConsoleApp;
 using BusBoard.Web.Models;
 using BusBoard.Web.ViewModels;
 
@@ -20,6 +21,19 @@ namespace BusBoard.Web.Controllers
       var info = new BusInfo(selection.Postcode);
       return View(info);
     }
+    
+    public ActionResult BusStopInfo(PostcodeSelection selection)
+    {
+      var postcodeReceiver = new DataReceiverFromPostcodes();
+      var tfLReceiver = new DataReceiverFromTfL();
+      
+      var postcode = postcodeReceiver.GetPostcodeData(selection.Postcode);
+      var stops = tfLReceiver.GetBusStops(postcode.longitude, postcode.latitude);
+      
+      var info = new BusStopInfo(stops);
+      return View(info);
+    }
+
 
     public ActionResult About()
     {

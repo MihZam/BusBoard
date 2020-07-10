@@ -10,7 +10,7 @@ namespace BusBoard.ConsoleApp
       // 490008660N    NW5 1TL
       ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
       var tfLReceiver = new DataReceiverFromTfL();
-      var postcodeReceiver = new DataReceiverFromPostCodes();
+      var postcodeReceiver = new DataReceiverFromPostcodes();
       var ui = new UserInterface();
       var output = new ConsoleOutput();
       var sorter = new Sorter();
