@@ -11,7 +11,7 @@ namespace BusBoard.ConsoleApp
             foreach (var stop in stops)
             {
                 stop.distance = Math.Pow((double.Parse(stop.lat) - double.Parse(postcode.latitude)), 2) +
-                                Math.Pow(double.Parse(stop.lon) - double.Parse(postcode.longitude), 2);
+                                Math.Pow((double.Parse(stop.lon) - double.Parse(postcode.longitude))*Math.Cos(51.5), 2);
             }
             stops.Sort((x,y) => x.distance.CompareTo(y.distance));
             return stops;
