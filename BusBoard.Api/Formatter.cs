@@ -5,6 +5,28 @@ namespace BusBoard.ConsoleApp
 {
     public class Formatter
     {
+
+        public static string FormatTime(int timeInSeconds)
+        {
+            var minutes = Decimal.Floor(timeInSeconds / 60);
+            if (minutes == 0)
+            {
+                return "Due";
+            }
+
+            if (minutes == 1)
+            {
+                return "1 min";
+            }
+
+            return minutes + " mins";
+        }
+
+        public static string FormatBusLine(string line, int time)
+        {
+            return line + " --- " + FormatTime(time);
+        }
+        
         public string GetFormatOfNextNBuses(List<Bus> upcomingBuses, int numberOfBuses)
         {
             string text = "";
@@ -15,19 +37,8 @@ namespace BusBoard.ConsoleApp
                     break;
                 }
                 var bus = upcomingBuses[i];
-                var minutes = Decimal.Floor(bus.timeToStation / 60);
-                string end;
-                if (minutes == 0)
-                {
-                    end = "Due";
-                } else if (minutes == 1)
-                {
-                    end = "1 min";
-                } else
-                {
-                    end = minutes + " mins";
-                }
-                text += $"Bus {bus.lineName}  ---  {end}\n";
+                
+                text += $"Bus {bus.lineName}  ---  {FormatTime(bus.timeToStation)}\n";
             }
 
             return text;

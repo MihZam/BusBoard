@@ -1,10 +1,24 @@
-﻿@model BusBoard.Web.ViewModels.BusInfo
+﻿@using BusBoard.ConsoleApp
+@model BusBoard.Web.ViewModels.BusInfo
+
 @{
-  ViewBag.Title = "Bus Information";
+    ViewBag.Title = "Bus Information";
 }
 
-<h2>BusInfo</h2>
+<h2>BusStopInformation</h2>
 
 <div class="row">
-    <p>You entered postcode @Model.PostCode</p>
+    <p>The local bus stops are: </p>
 </div>
+
+
+@foreach (var stop in Model.LocalStops)
+{
+    <div class="row">
+        <p>@stop.NaptanId</p>
+        @foreach (var bus in stop.Buses)
+        {
+            <p>@Formatter.FormatBusLine(bus.lineName,bus.timeToStation)</p>
+        }
+    </div>
+}

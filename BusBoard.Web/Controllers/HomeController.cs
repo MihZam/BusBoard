@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using BusBoard.ConsoleApp;
 using BusBoard.Web.Models;
@@ -17,15 +15,9 @@ namespace BusBoard.Web.Controllers
 
     [HttpGet]
     public ActionResult BusInfo(PostcodeSelection selection)
-    {
       // Add some properties to the BusInfo view model with the data you want to render on the page.
       // Write code here to populate the view model with info from the APIs.
       // Then modify the view (in Views/Home/BusInfo.cshtml) to render upcoming buses.
-      var info = new BusInfo(selection.Postcode);
-      return View(info);
-    }
-    
-    public ActionResult BusStopInfo(PostcodeSelection selection)
     {
       // Makes objects to communicate with APIs
       var postcodeReceiver = new DataReceiverFromPostcodes();
@@ -36,7 +28,7 @@ namespace BusBoard.Web.Controllers
       
       // Gets the closest 2 stops
       var stops = tfLReceiver.GetBusStops(postcode.longitude, postcode.latitude);
-      List<BusStopArrivals> up = new List<BusStopArrivals>();
+      List<BusStopsAndIncomingBuses> up = new List<BusStopsAndIncomingBuses>();
       
       foreach (var stop in stops)
       {
@@ -47,11 +39,11 @@ namespace BusBoard.Web.Controllers
         var upcomingBusesSorted = sorter.sortByTime(upcomingBuses);
         
         // adds the combined bus stop name & upcoming buses object to a list
-        up.Add(new BusStopArrivals(stop.naptanId, upcomingBusesSorted));
+        up.Add(new BusStopsAndIncomingBuses(stop.naptanId, upcomingBusesSorted));
       }
       
       // sends the list off to BusStopInfo
-      var info = new BusStopInfo(up);
+      var info = new BusInfo(up);
       return View(info);
     }
 
