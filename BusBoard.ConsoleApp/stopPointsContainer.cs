@@ -2,7 +2,7 @@
 
 namespace BusBoard.ConsoleApp
 {
-    public class PostcodeJson
+    public class stopPointsContainer
     {
         public List<BusStop> stopPoints { get; set; }
     }

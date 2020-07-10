@@ -5,12 +5,29 @@ namespace BusBoard.ConsoleApp
 {
     public class ConsoleOutput
     {
-        public void printNext5Buses(List<Bus> upcomingBuses)
+        public void WelcomeToBusBoard()
         {
-            for (var i = 0; i < 5; i++)
+            Console.WriteLine("Welcome to BusBoard!");
+        }
+        
+        public void printNextNBuses(List<Bus> upcomingBuses, int numberOfBuses)
+        {
+            for (var i = 0; i < numberOfBuses; i++)
             {
                 var bus = upcomingBuses[i];
-                Console.WriteLine($"Bus {bus.lineName}  ---  {Decimal.Floor(bus.timeToStation / 60)} mins");
+                var minutes = Decimal.Floor(bus.timeToStation / 60);
+                string end;
+                if (minutes == 0)
+                {
+                    end = "Due";
+                } else if (minutes == 1)
+                {
+                    end = "1 min";
+                } else
+                {
+                    end = minutes + " mins";
+                }
+                Console.WriteLine($"Bus {bus.lineName}  ---  {end}");
                 Console.WriteLine(bus.expectedArrival);
             }
         }

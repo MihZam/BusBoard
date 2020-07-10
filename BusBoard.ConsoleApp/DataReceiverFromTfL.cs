@@ -20,9 +20,9 @@ namespace BusBoard.ConsoleApp
         public List<BusStop> GetBusStops(string lon, string lat)
         {
             RestRequest request = new RestRequest(
-                $"StopPoint?stopTypes=NaptanBusCoachStation%2C%20NaptanBusWayPoint%2C%20NaptanOnstreetBusCoachStopCluster%2C%20NaptanOnstreetBusCoachStopPair%2C%20NaptanPrivateBusCoachTram%2C%20NaptanPublicBusCoachTram&modes=bus&lat={lat}&lon={lon}",
+                $"StopPoint?stopTypes=NaptanBusCoachStation%2C%20NaptanBusWayPoint%2C%20NaptanPrivateBusCoachTram%2C%20NaptanPublicBusCoachTram&useStopPointHierarchy=false&modes=bus&lat={lat}&lon={lon}",
                 DataFormat.Json);
-            var response = client.Get<PostcodeJson>(request);
+            var response = client.Get<stopPointsContainer>(request);
             return response.Data.stopPoints;
         }
     }

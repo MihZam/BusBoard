@@ -7,10 +7,10 @@ namespace BusBoard.ConsoleApp
     {
         RestClient client = new RestClient("https://api.postcodes.io/postcodes/");
 
-        public PostCode GetPostCodeData(string postCodeInput)
+        public Postcode GetPostCodeData(string postCodeInput)
         {
             RestRequest request = new RestRequest(postCodeInput, DataFormat.Json);
-            var response = client.Get<random>(request);
+            var response = client.Get<postcodeContainer>(request);
             return response.Data.result;
         }
     }
