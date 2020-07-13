@@ -18,7 +18,7 @@
         <p>@Formatter.FormatStopName(stop.NaptanId, stop.CommonName)</p>
         @foreach (var bus in stop.Buses)
         {
-            <p>@Formatter.FormatBusLine(bus.lineName,bus.timeToStation)</p>
+            <p>@Formatter.FormatBusLine(bus.lineName, bus.timeToStation)</p>
         }
     </div>
 }

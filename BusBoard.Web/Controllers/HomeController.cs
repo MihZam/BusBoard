@@ -16,26 +16,16 @@ namespace BusBoard.Web.Controllers
 
     [HttpGet]
     public ActionResult BusInfo(PostcodeSelection selection)
-      // Add some properties to the BusInfo view model with the data you want to render on the page.
-      // Write code here to populate the view model with info from the APIs.
-      // Then modify the view (in Views/Home/BusInfo.cshtml) to render upcoming buses.
     {
       Response.AddHeader("Refresh", "30");
       
-      // Makes objects to communicate with APIs
       var postcodeReceiver = new DataReceiverFromPostcodes();
       var tfLReceiver = new DataReceiverFromTfL();
-      
-      // Auxiliary objects
       var sorter = new Sorter();
       
-      // Gets the postcode data from the input
       var postcode = postcodeReceiver.GetPostcodeData(selection.Postcode);
+      var up = new List<BusStopsAndIncomingBuses>();
       
-      // Initialize list of objects to send to view
-      List<BusStopsAndIncomingBuses> up = new List<BusStopsAndIncomingBuses>();
-      
-      // Gets the closest 2 stops
       try
       {
         var stops = tfLReceiver.GetBusStops(postcode.longitude, postcode.latitude);
@@ -45,11 +35,8 @@ namespace BusBoard.Web.Controllers
         {
 
           var stop = stops[i];
-          // gets the upcoming buses
           var upcomingBuses = tfLReceiver.GetBusArrivals(stop.naptanId);
           var upcomingBusesSorted = sorter.sortByTime(upcomingBuses);
-
-          // adds the combined bus stop name & upcoming buses object to a list
           up.Add(new BusStopsAndIncomingBuses(stop.naptanId, sorter.getFirstNBuses(upcomingBusesSorted, 5),
             stop.commonName));
         }
@@ -58,8 +45,7 @@ namespace BusBoard.Web.Controllers
       {
         up.Add(new BusStopsAndIncomingBuses("Invalid Postcode", new List<Bus>(), "Error"));
       }
-
-      // sends the list off to BusStopInfo
+      
       var info = new BusInfo(up);
       return View(info);
     }
