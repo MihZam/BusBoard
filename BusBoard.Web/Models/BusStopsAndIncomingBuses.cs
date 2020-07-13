@@ -11,7 +11,7 @@ namespace BusBoard.Web.Models
             this.Buses = buses;
         }
         
-        public string NaptanId { get; }
+        public string NaptanId { get;  }
         public List<Bus> Buses { get; }
     }
 }
