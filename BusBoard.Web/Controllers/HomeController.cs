@@ -19,6 +19,7 @@ namespace BusBoard.Web.Controllers
       // Write code here to populate the view model with info from the APIs.
       // Then modify the view (in Views/Home/BusInfo.cshtml) to render upcoming buses.
     {
+      Response.AddHeader("Refresh", "30");
       // Makes objects to communicate with APIs
       var postcodeReceiver = new DataReceiverFromPostcodes();
       var tfLReceiver = new DataReceiverFromTfL();
