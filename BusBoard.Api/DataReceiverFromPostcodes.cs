@@ -11,7 +11,8 @@ namespace BusBoard.ConsoleApp
         {
             RestRequest request = new RestRequest(postcodeInput, DataFormat.Json);
             var response = client.Get<postcodeContainer>(request);
-            return response.Data.result;
+
+                return response.Data.result;
         }
     }
 }

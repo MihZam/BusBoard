@@ -29,6 +29,10 @@ namespace BusBoard.ConsoleApp
             var result = new List<Bus>();
             for (var i = 0; i < N; i++)
             {
+                if (i >= buses.Count)
+                {
+                    break;
+                }
                 result.Add(buses[i]);
             }
 

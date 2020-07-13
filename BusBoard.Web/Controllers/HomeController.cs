@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using BusBoard.ConsoleApp;
 using BusBoard.Web.Models;
@@ -30,22 +31,32 @@ namespace BusBoard.Web.Controllers
       // Gets the postcode data from the input
       var postcode = postcodeReceiver.GetPostcodeData(selection.Postcode);
       
-      // Gets the closest 2 stops
-      var stops = tfLReceiver.GetBusStops(postcode.longitude, postcode.latitude);
-      stops = sorter.sortByDistance(stops, postcode);
+      // Initialize list of objects to send to view
       List<BusStopsAndIncomingBuses> up = new List<BusStopsAndIncomingBuses>();
       
-      for (var i = 0; i < 2; i++)
+      // Gets the closest 2 stops
+      try
       {
+        var stops = tfLReceiver.GetBusStops(postcode.longitude, postcode.latitude);
+        stops = sorter.sortByDistance(stops, postcode);
 
-        var stop = stops[i];
-        // gets the upcoming buses
-        var upcomingBuses = tfLReceiver.GetBusArrivals(stop.naptanId);
-        var upcomingBusesSorted = sorter.sortByTime(upcomingBuses);
-        var test = sorter.getFirstNBuses(upcomingBusesSorted, 5);
-        
-        // adds the combined bus stop name & upcoming buses object to a list
-        up.Add(new BusStopsAndIncomingBuses(stop.naptanId, sorter.getFirstNBuses(upcomingBusesSorted, 5), stop.commonName));
+        for (var i = 0; i < 2; i++)
+        {
+
+          var stop = stops[i];
+          // gets the upcoming buses
+          var upcomingBuses = tfLReceiver.GetBusArrivals(stop.naptanId);
+          var upcomingBusesSorted = sorter.sortByTime(upcomingBuses);
+          var test = sorter.getFirstNBuses(upcomingBusesSorted, 5);
+
+          // adds the combined bus stop name & upcoming buses object to a list
+          up.Add(new BusStopsAndIncomingBuses(stop.naptanId, sorter.getFirstNBuses(upcomingBusesSorted, 5),
+            stop.commonName));
+        }
+      }
+      catch (NullReferenceException ex)
+      {
+        up.Add(new BusStopsAndIncomingBuses("Invalid Postcode", new List<Bus>(), "Error"));
       }
 
       // sends the list off to BusStopInfo
