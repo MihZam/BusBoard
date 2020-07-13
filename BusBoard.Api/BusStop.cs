@@ -6,6 +6,7 @@
         public string lat { get; set; }
         public string lon { get; set; }
         public double distance { get; set; }
+        public string commonName { get; set; }
 
 
     }

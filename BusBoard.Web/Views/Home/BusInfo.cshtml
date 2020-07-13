@@ -15,7 +15,7 @@
 @foreach (var stop in Model.LocalStops)
 {
     <div class="row">
-        <p>@stop.NaptanId</p>
+        <p>@Formatter.FormatStopName(stop.NaptanId, stop.CommonName)</p>
         @foreach (var bus in stop.Buses)
         {
             <p>@Formatter.FormatBusLine(bus.lineName,bus.timeToStation)</p>

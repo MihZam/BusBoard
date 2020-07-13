@@ -23,25 +23,30 @@ namespace BusBoard.Web.Controllers
       var postcodeReceiver = new DataReceiverFromPostcodes();
       var tfLReceiver = new DataReceiverFromTfL();
       
+      // Auxiliary objects
+      var sorter = new Sorter();
+      
       // Gets the postcode data from the input
       var postcode = postcodeReceiver.GetPostcodeData(selection.Postcode);
       
       // Gets the closest 2 stops
       var stops = tfLReceiver.GetBusStops(postcode.longitude, postcode.latitude);
+      stops = sorter.sortByDistance(stops, postcode);
       List<BusStopsAndIncomingBuses> up = new List<BusStopsAndIncomingBuses>();
       
-      foreach (var stop in stops)
+      for (var i = 0; i < 2; i++)
       {
-        var sorter = new Sorter();
-      
+
+        var stop = stops[i];
         // gets the upcoming buses
         var upcomingBuses = tfLReceiver.GetBusArrivals(stop.naptanId);
         var upcomingBusesSorted = sorter.sortByTime(upcomingBuses);
+        var test = sorter.getFirstNBuses(upcomingBusesSorted, 5);
         
         // adds the combined bus stop name & upcoming buses object to a list
-        up.Add(new BusStopsAndIncomingBuses(stop.naptanId, upcomingBusesSorted));
+        up.Add(new BusStopsAndIncomingBuses(stop.naptanId, sorter.getFirstNBuses(upcomingBusesSorted, 5), stop.commonName));
       }
-      
+
       // sends the list off to BusStopInfo
       var info = new BusInfo(up);
       return View(info);

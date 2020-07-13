@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mime;
 
 namespace BusBoard.ConsoleApp
@@ -21,6 +22,17 @@ namespace BusBoard.ConsoleApp
         {
             buses.Sort((x,y) => x.timeToStation.CompareTo(y.timeToStation));
             return buses;
+        }
+
+        public List<Bus> getFirstNBuses(List<Bus> buses, int N)
+        {
+            var result = new List<Bus>();
+            for (var i = 0; i < N; i++)
+            {
+                result.Add(buses[i]);
+            }
+
+            return result;
         }
     }
 }

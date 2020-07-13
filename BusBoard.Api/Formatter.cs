@@ -26,6 +26,11 @@ namespace BusBoard.ConsoleApp
         {
             return line + " --- " + FormatTime(time);
         }
+
+        public static string FormatStopName(string id, string name)
+        {
+            return ($"{name} ({id})");
+        }
         
         public string GetFormatOfNextNBuses(List<Bus> upcomingBuses, int numberOfBuses)
         {
