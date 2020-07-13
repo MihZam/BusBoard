@@ -21,6 +21,7 @@ namespace BusBoard.Web.Controllers
       // Then modify the view (in Views/Home/BusInfo.cshtml) to render upcoming buses.
     {
       Response.AddHeader("Refresh", "30");
+      
       // Makes objects to communicate with APIs
       var postcodeReceiver = new DataReceiverFromPostcodes();
       var tfLReceiver = new DataReceiverFromTfL();
@@ -47,7 +48,6 @@ namespace BusBoard.Web.Controllers
           // gets the upcoming buses
           var upcomingBuses = tfLReceiver.GetBusArrivals(stop.naptanId);
           var upcomingBusesSorted = sorter.sortByTime(upcomingBuses);
-          var test = sorter.getFirstNBuses(upcomingBusesSorted, 5);
 
           // adds the combined bus stop name & upcoming buses object to a list
           up.Add(new BusStopsAndIncomingBuses(stop.naptanId, sorter.getFirstNBuses(upcomingBusesSorted, 5),
